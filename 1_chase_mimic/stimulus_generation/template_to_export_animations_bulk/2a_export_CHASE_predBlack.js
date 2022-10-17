@@ -3,27 +3,34 @@
 
 import { fromSaveStr } from "/Users/f0053cz/Documents/GitHub/psyanim/psyanim/src/js/components/utils/SaveLoad";
 import dataStr from "/Users/f0053cz/Documents/GitHub/chase_mimic_study/stimulus_generation/base_stim_chase_predBlack.psyn";
-//In these Psyanim files, the predator is always the black agent.
+// In these Psyanim files, the predator is always the black agent.
 // Replace this by ...predGrey.psyn to generate a set of videos where the predator is always the grey agent. (Also rename the export file 
 // accordingly when defining the variable "flname" below)
 import VideoExporter from "/Users/f0053cz/Documents/GitHub/psyanim/psyanim/src/js/components/utils/VideoExporter";
-// replace the file locations above as needed.
+// CHANGE FILENAMES AS NECESSARY
 
-const condition = 'redo_bad';
-//'redo_bad' to redo some bad videos again, 
+const condition = 'all';
 // 'all' to create all videos
+//'redo_bad' to redo some bad videos again, 
+// CHANGE AS NECESSARY
 
-var export_path;
-if (condition == 'redo_bad') {
-    //console.log('in redo')
-    export_path = "/Users/f0053cz/Documents/GitHub/chase_mimic_study/stimulus_generation/vids/chase4/chase_.webm";
-}
+var export_path; // location where the files will be exported. 
 
 if (condition == 'all') {
     //console.log('in all');
-    export_path = "/Users/f0053cz/Documents/GitHub/chase_mimic_study/stimulus_generation/vids/test_chase/chase_.webm";
+    export_path = "/Users/f0053cz/Documents/GitHub/chase_mimic_study/stimulus_generation/chase_.webm";
+    //CHANGE THIS AS NECESSARY - MAKE SURE THE FULL FILE PATH EXISTS!
+    // In this case "chase_" is the prefix. The fulle filename will be "chase_<flname>.webm", where flname is as defined inside the for loop each iteration
 }
-console.log('export_path', export_path)
+
+if (condition == 'redo_bad') {
+    //console.log('in redo')
+    export_path = "/Users/f0053cz/Documents/GitHub/chase_mimic_study/stimulus_generation/chase_.webm";
+    //CHANGE THIS AS NECESSARY - MAKE SURE THE FULL FILE PATH EXISTS!
+}
+
+
+console.log('export_path', export_path) // print file path - use this to check if you entered the right path.
 
 let world = fromSaveStr(dataStr);
 console.log(world)
@@ -33,7 +40,7 @@ let exportOptions = { // all the export parameters
     frameRate: 30,
     motionBlurFrames: 0,
     quality: 1,
-    numRecollapses: 0, // error with recollapses
+    numRecollapses: 0, // error with this feature. Usually used to keep multiple versions with the same set of parameters
     doExportState: true,
     doExportPsyn: true, // this creates a .psyn file for every .webm file
     doExportCheat: false
@@ -41,7 +48,7 @@ let exportOptions = { // all the export parameters
 
 let subtletyVariations = [];
 for (let subtlety of[0, 30, 60, 90, 120, 150]) {
-    subtletyVariations.push( // list of objects with the variations.
+    subtletyVariations.push( // list of objects with the variations. CHANGE AS NECESSARY
         [
             { motiv: "predator-motiv", param: "subtlety", val: subtlety }
         ]
@@ -65,7 +72,7 @@ let posPredatorPreyVariations = [
 ];
 
 let bad_root_filenames;
-if (condition == 'redo_bad') {
+if (condition == 'redo_bad') { // CHANGE THE FILE NAMES HERE IF YOU WANT TO REDO ONLY THE BAD FILES!
     // enter the names of the files that need to be created again
     bad_root_filenames = ['pred_subt0_Black_Posx_850_var1']
 }
